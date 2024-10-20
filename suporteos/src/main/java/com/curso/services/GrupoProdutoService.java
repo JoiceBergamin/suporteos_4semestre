@@ -1,11 +1,16 @@
 package com.curso.services;
 
+import com.curso.domains.GrupoProduto;
 import com.curso.domains.dtos.GrupoProdutoDTO;
 import com.curso.repositories.GrupoProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,4 +24,10 @@ public class GrupoProdutoService {
         return grupoProdutoRepo.findAll().stream().map
                 (obj -> new GrupoProdutoDTO(obj)).collect(Collectors.toList());
     }
-}
+    public GrupoProduto findbyId (int id){
+        Optional<GrupoProduto> obj = grupoProdutoRepo.findById(id);
+        return obj.orElse(null);
+    }
+
+    }
+

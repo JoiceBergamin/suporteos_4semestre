@@ -19,6 +19,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_produto")
     private long idProduto;
 
+    @NotBlank @NotNull
+    private String codigoBarra;
+
     @NotNull @NotBlank
     private String descricao;
 
@@ -52,8 +55,9 @@ public class Produto {
         this.status=Status.ATIVO;
     }
 
-    public Produto(long idProduto, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, LocalDate dataCadastro, GrupoProduto grupoProduto, Status status) {
+    public Produto(long idProduto, String codigoBarra, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, LocalDate dataCadastro, GrupoProduto grupoProduto, Status status) {
         this.idProduto = idProduto;
+        this.codigoBarra = codigoBarra;
         this.descricao = descricao;
         this.saldoEstoque = saldoEstoque;
         this.valorUnitario = valorUnitario;
@@ -67,6 +71,14 @@ public class Produto {
 
     public long getIdProduto() {
         return idProduto;
+    }
+
+    public @NotBlank @NotNull String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(@NotBlank @NotNull String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
     public void setIdProduto(long idProduto) {

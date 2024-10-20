@@ -13,6 +13,10 @@ public class ProdutoDTO {
 
     private long idProduto;
 
+    @NotBlank (message = "O campo codigo de barras não pode estar vazio")
+    @NotNull (message = "O campo codigo de barras não pode ser nulo")
+    private String codigoBarra;
+
     @NotNull(message = "O campo descrição não pode ser nulo")
     @NotBlank(message = "O campo descrição não pode estar vazio")
     private String descricao;
@@ -43,6 +47,7 @@ public class ProdutoDTO {
 
     public ProdutoDTO(Produto produto) {
         this.idProduto = produto.getIdProduto();
+        this.codigoBarra = produto.getCodigoBarra();
         this.descricao = produto.getDescricao();
         this.saldoEstoque = produto.getSaldoEstoque();
         this.valorUnitario = produto.getValorUnitario();
@@ -60,6 +65,14 @@ public class ProdutoDTO {
 
     public void setIdProduto(long idProduto) {
         this.idProduto = idProduto;
+    }
+
+    public @NotBlank(message = "O campo codigo de barras não pode estar vazio") @NotNull(message = "O campo codigo de barras não pode ser nulo") String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(@NotBlank(message = "O campo codigo de barras não pode estar vazio") @NotNull(message = "O campo codigo de barras não pode ser nulo") String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
     public @NotNull(message = "O campo descrição não pode ser nulo") @NotBlank(message = "O campo descrição não pode estar vazio") String getDescricao() {
