@@ -1,5 +1,6 @@
 package com.curso.domains;
 
+import com.curso.domains.dtos.GrupoProdutoDTO;
 import com.curso.domains.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -47,6 +48,12 @@ public class GrupoProduto {
         this.descricao = descricao;
         this.status = status;
 
+    }
+
+    public GrupoProduto(GrupoProdutoDTO dto){
+        this.id=dto.getId();
+        this.descricao= dto.getDescricao();
+        this.status=Status.toEnum(dto.getStatus());
     }
 
     public Integer getId() {
