@@ -34,6 +34,12 @@ public class GrupoProdutoService {
         GrupoProduto obj = new GrupoProduto(dto);
         return grupoProdutoRepo.save(obj);
     }
+    public GrupoProduto update(Integer id, GrupoProdutoDTO objDto){
+        objDto.setId(id);
+        GrupoProduto oldObj = findbyId(id);
+        oldObj = new GrupoProduto(objDto);
+        return grupoProdutoRepo.save(oldObj);
+    }
 
     }
 

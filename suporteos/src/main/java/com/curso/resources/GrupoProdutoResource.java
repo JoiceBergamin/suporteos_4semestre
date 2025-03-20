@@ -35,4 +35,9 @@ public class GrupoProdutoResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(grupoProduto.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<GrupoProdutoDTO> update(@PathVariable Integer id, @Valid @RequestBody GrupoProdutoDTO objDto){
+        GrupoProduto Obj = grupoProdutoService.update(id, objDto);
+        return ResponseEntity.ok().body(new GrupoProdutoDTO(Obj));
+    }
 }
