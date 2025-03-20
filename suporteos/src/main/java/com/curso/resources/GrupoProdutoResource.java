@@ -3,6 +3,7 @@ package com.curso.resources;
 import com.curso.domains.GrupoProduto;
 import com.curso.domains.dtos.GrupoProdutoDTO;
 import com.curso.services.GrupoProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class GrupoProdutoResource {
     }
 
     @PostMapping
-    public ResponseEntity<GrupoProdutoDTO> create(@RequestBody GrupoProdutoDTO dto){
+    public ResponseEntity<GrupoProdutoDTO> create(@Valid @RequestBody GrupoProdutoDTO dto){
         GrupoProduto grupoProduto = grupoProdutoService.create(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(grupoProduto.getId()).toUri();
         return ResponseEntity.created(uri).build();

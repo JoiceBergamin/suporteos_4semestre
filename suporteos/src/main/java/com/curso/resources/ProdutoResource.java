@@ -3,6 +3,7 @@ package com.curso.resources;
 import com.curso.domains.Produto;
 import com.curso.domains.dtos.ProdutoDTO;
 import com.curso.services.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ProdutoResource {
         return ResponseEntity.ok().body(new ProdutoDTO(obj));
     }
     @PostMapping
-    public ResponseEntity<ProdutoDTO> create(@RequestBody ProdutoDTO dto){
+    public ResponseEntity<ProdutoDTO> create(@Valid @RequestBody ProdutoDTO dto){
         Produto produto = produtoService.create(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produto.getIdProduto()).toUri();
         return ResponseEntity.created(uri).build();

@@ -1,8 +1,11 @@
 package com.curso.services;
 
+import com.curso.domains.GrupoProduto;
 import com.curso.domains.Produto;
 import com.curso.domains.dtos.ProdutoDTO;
+import com.curso.repositories.GrupoProdutoRepository;
 import com.curso.repositories.ProdutoRepository;
+import com.curso.services.exceptions.DataIntegrityViolationException;
 import com.curso.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,8 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepo;
-
+    @Autowired
+    private GrupoProdutoRepository grupoProdutoRepo;
     public List<ProdutoDTO> findAll(){
         //retorna uma lista de ProdutoDTO
         return produtoRepo.findAll().stream().map
@@ -32,7 +36,20 @@ public class ProdutoService {
     }
     public Produto create(ProdutoDTO dto){
         dto.setIdProduto(null);
+        validaProduto(dto);
         Produto obj = new Produto(dto);
         return produtoRepo.save(obj);
+    }
+
+    private void validaProduto(ProdutoDTO dto){
+        Optional<Produto> obj = produtoRepo.findByCodigoBarra(dto.getCodigoBarra());
+        if(obj.isPresent() && obj.get().getIdProduto() != dto.getIdProduto()){
+            throw new DataIntegrityViolationException("Código de barras já cadastrado!");
+        }
+
+        Optional<GrupoProduto> grupoProduto = grupoProdutoRepo.findById(dto.getGrupoProduto());
+        if(!grupoProduto.isPresent()){
+            throw new DataIntegrityViolationException("Grupo de Produto - " + dto.getGrupoProduto() + " não está cadastrado!");
+        }
     }
 }

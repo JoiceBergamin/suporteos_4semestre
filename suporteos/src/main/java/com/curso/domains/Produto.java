@@ -22,6 +22,7 @@ public class Produto {
     private Long idProduto;
 
     @NotBlank @NotNull
+    @Column(unique = true)
     private String codigoBarra;
 
     @NotBlank @NotNull
