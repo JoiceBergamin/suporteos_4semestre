@@ -30,14 +30,6 @@ public class GrupoProduto {
     @OneToMany(mappedBy = "grupoProduto")
     private List<Produto> produtos = new ArrayList<>();
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-//não tá na ordem, mas talvez não dê problema
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
 
     public GrupoProduto() {
         this.status = Status.ATIVO;
@@ -80,6 +72,13 @@ public class GrupoProduto {
         this.status = status;
     }
 
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

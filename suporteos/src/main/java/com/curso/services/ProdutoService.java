@@ -30,4 +30,9 @@ public class ProdutoService {
         Optional<Produto> obj=produtoRepo.findByCodigoBarra(codigoBarra);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado! CodigoBarra: " + codigoBarra));
     }
+    public Produto create(ProdutoDTO dto){
+        dto.setIdProduto(null);
+        Produto obj = new Produto(dto);
+        return produtoRepo.save(obj);
+    }
 }

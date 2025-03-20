@@ -1,5 +1,7 @@
 package com.curso.domains;
 
+
+import com.curso.domains.dtos.ProdutoDTO;
 import com.curso.domains.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -22,7 +24,7 @@ public class Produto {
     @NotBlank @NotNull
     private String codigoBarra;
 
-    @NotNull @NotBlank
+    @NotBlank @NotNull
     private String descricao;
 
     @NotNull
@@ -37,7 +39,7 @@ public class Produto {
     @Digits(integer = 15, fraction = 2)
     private BigDecimal valorEstoque;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat (pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro = LocalDate.now();
 
     @ManyToOne
@@ -49,10 +51,10 @@ public class Produto {
     private Status status;
 
     public Produto() {
-        this.saldoEstoque=BigDecimal.ZERO;
+        this.saldoEstoque = BigDecimal.ZERO;
         this.valorUnitario=BigDecimal.ZERO;
-        this.valorEstoque=BigDecimal.ZERO;
-        this.status=Status.ATIVO;
+        this.valorEstoque= BigDecimal.ZERO;
+        this.status= Status.ATIVO;
     }
 
     public Produto(Long idProduto, String codigoBarra, String descricao, BigDecimal saldoEstoque, BigDecimal valorUnitario, LocalDate dataCadastro, GrupoProduto grupoProduto, Status status) {
@@ -64,56 +66,69 @@ public class Produto {
         this.dataCadastro = dataCadastro;
         this.grupoProduto = grupoProduto;
         this.status = status;
-
-        this.saldoEstoque=saldoEstoque != null ? saldoEstoque : BigDecimal.ZERO;
-        this.valorEstoque = saldoEstoque != null ? saldoEstoque.multiply(valorUnitario) : BigDecimal.ZERO;
+        this.valorEstoque = saldoEstoque.multiply(valorUnitario).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
+    public Produto(ProdutoDTO dto){
+        this.idProduto = dto.getIdProduto();
+        this.codigoBarra= dto.getCodigoBarra();
+        this.descricao= dto.getDescricao();
+        this.valorUnitario = dto.getValorUnitario();
+        this.saldoEstoque = dto.getSaldoEstoque();
+        this.dataCadastro=dto.getDataCadastro();
+        this.status = Status.toEnum(dto.getStatus());
+
+        this.grupoProduto = new GrupoProduto();
+        this.grupoProduto.setId(dto.getGrupoProduto());
+
+        this.valorEstoque = dto.getSaldoEstoque().multiply(valorUnitario).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
 
     public Long getIdProduto() {
         return idProduto;
     }
 
-    public @NotBlank @NotNull String getCodigoBarra() {
-        return codigoBarra;
-    }
-
-    public void setCodigoBarra(@NotBlank @NotNull String codigoBarra) {
-        this.codigoBarra = codigoBarra;
-    }
-
-    public void setIdProduto(long idProduto) {
+    public void setIdProduto(Long idProduto) {
         this.idProduto = idProduto;
     }
 
-    public @NotNull @NotBlank String getDescricao() {
+    public String getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
+    }
+
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(@NotNull @NotBlank String descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    public @NotNull @Digits(integer = 15, fraction = 3) BigDecimal getSaldoEstoque() {
+    public BigDecimal getSaldoEstoque() {
         return saldoEstoque;
     }
 
-    public void setSaldoEstoque(@NotNull @Digits(integer = 15, fraction = 3) BigDecimal saldoEstoque) {
+    public void setSaldoEstoque(BigDecimal saldoEstoque) {
         this.saldoEstoque = saldoEstoque;
     }
 
-    public @NotNull @Digits(integer = 15, fraction = 3) BigDecimal getValorUnitario() {
+    public BigDecimal getValorUnitario() {
         return valorUnitario;
     }
 
-    public void setValorUnitario(@NotNull @Digits(integer = 15, fraction = 3) BigDecimal valorUnitario) {
+    public void setValorUnitario(BigDecimal valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
 
-    public @NotNull @Digits(integer = 15, fraction = 2) BigDecimal getValorEstoque() {
+    public BigDecimal getValorEstoque() {
         return valorEstoque;
     }
 
-    public void setValorEstoque(@NotNull @Digits(integer = 15, fraction = 2) BigDecimal valorEstoque) {
+    public void setValorEstoque(BigDecimal valorEstoque) {
         this.valorEstoque = valorEstoque;
     }
 
@@ -146,7 +161,7 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return idProduto == produto.idProduto && Objects.equals(descricao, produto.descricao);
+        return Objects.equals(idProduto, produto.idProduto) && Objects.equals(descricao, produto.descricao);
     }
 
     @Override

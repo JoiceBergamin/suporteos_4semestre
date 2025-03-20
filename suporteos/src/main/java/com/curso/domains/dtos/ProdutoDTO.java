@@ -11,10 +11,10 @@ import java.time.LocalDate;
 
 public class ProdutoDTO {
 
-    private long idProduto;
+    private Long idProduto;
 
-    @NotBlank (message = "O campo codigo de barras não pode estar vazio")
-    @NotNull (message = "O campo codigo de barras não pode ser nulo")
+    @NotBlank(message = "O campo codigo de barras não pode estar vazio")
+    @NotNull(message = "O campo codigo de barras não pode ser nulo")
     private String codigoBarra;
 
     @NotNull(message = "O campo descrição não pode ser nulo")
@@ -59,11 +59,11 @@ public class ProdutoDTO {
 
     }
 
-    public long getIdProduto() {
+    public Long getIdProduto() {
         return idProduto;
     }
 
-    public void setIdProduto(long idProduto) {
+    public void setIdProduto(Long idProduto) {
         this.idProduto = idProduto;
     }
 
@@ -140,3 +140,4 @@ public class ProdutoDTO {
         this.status = status;
     }
 }
+
