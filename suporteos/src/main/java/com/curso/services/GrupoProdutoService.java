@@ -3,6 +3,7 @@ package com.curso.services;
 import com.curso.domains.GrupoProduto;
 import com.curso.domains.dtos.GrupoProdutoDTO;
 import com.curso.repositories.GrupoProdutoRepository;
+import com.curso.services.exceptions.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,12 @@ public class GrupoProdutoService {
         oldObj = new GrupoProduto(objDto);
         return grupoProdutoRepo.save(oldObj);
     }
-
+public void delete(Integer id) {
+    GrupoProduto obj = findbyId(id);
+    if (obj.getProdutos().size() > 0) {
+        throw new DataIntegrityViolationException("Grupo Produto não pode ser deletado pois possui produtos vinculados!");
+    }
+    grupoProdutoRepo.deleteById(id);
+}
     }
 

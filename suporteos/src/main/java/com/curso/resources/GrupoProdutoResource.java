@@ -40,4 +40,9 @@ public class GrupoProdutoResource {
         GrupoProduto Obj = grupoProdutoService.update(id, objDto);
         return ResponseEntity.ok().body(new GrupoProdutoDTO(Obj));
     }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<GrupoProdutoDTO> delete(@PathVariable Integer id){
+        grupoProdutoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
