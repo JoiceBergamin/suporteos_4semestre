@@ -1,6 +1,7 @@
 package com.curso.resources;
 
 import com.curso.domains.Produto;
+import com.curso.domains.dtos.GrupoProdutoDTO;
 import com.curso.domains.dtos.ProdutoDTO;
 import com.curso.services.ProdutoService;
 import jakarta.validation.Valid;
@@ -44,5 +45,11 @@ public class ProdutoResource {
     public ResponseEntity<ProdutoDTO> update(@PathVariable Long id,@Valid @RequestBody ProdutoDTO objDto){
         Produto Obj = produtoService.update(id, objDto);
         return ResponseEntity.ok().body(new ProdutoDTO(Obj));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<GrupoProdutoDTO> delete(@PathVariable Long id){
+        produtoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

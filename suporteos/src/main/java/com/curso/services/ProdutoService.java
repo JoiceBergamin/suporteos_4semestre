@@ -59,4 +59,9 @@ public class ProdutoService {
         oldObj = new Produto(objDto);
         return produtoRepo.save(oldObj);
     }
+
+    public void delete(Long id){
+        Produto obj = findbyId(id);
+        produtoRepo.deleteById(id);
+    }
 }
