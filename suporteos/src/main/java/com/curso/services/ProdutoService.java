@@ -52,4 +52,11 @@ public class ProdutoService {
             throw new DataIntegrityViolationException("Grupo de Produto - " + dto.getGrupoProduto() + " não está cadastrado!");
         }
     }
+    public Produto update(Long id, ProdutoDTO objDto){
+        objDto.setIdProduto(id);
+        Produto oldObj = findbyId(id);
+        validaProduto(objDto);
+        oldObj = new Produto(objDto);
+        return produtoRepo.save(oldObj);
+    }
 }
