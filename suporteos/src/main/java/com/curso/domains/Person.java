@@ -1,6 +1,8 @@
 package com.curso.domains;
 
 import com.curso.domains.enums.PersonType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -8,15 +10,28 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "person")
 public abstract class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_person")
     protected Long id;
     protected String firstName;
     protected String lastName;
+
+    @Column(unique = true)
     protected String cpf;
+
+    @Column(unique = true)
     protected String email;
     protected String password;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate createdAt = LocalDate.now();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "perfis")
     protected Set<Integer> personType = new HashSet<>();
 
     public Person() {
