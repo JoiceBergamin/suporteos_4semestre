@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+//@Table(name = "users") *se deixar a marcação para criar uma tabela própria dá erro
 public class User extends Person{
 
     @JsonIgnore
