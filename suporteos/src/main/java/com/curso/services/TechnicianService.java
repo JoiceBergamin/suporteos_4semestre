@@ -36,7 +36,7 @@ public class TechnicianService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! email:" + email));
     }
 
-    Technician create(TechnicianDTO objDto){
+   public Technician create(TechnicianDTO objDto){
         objDto.setId(null);
         ValidaCPFeEmail(objDto);
         Technician newObj = new Technician(objDto);

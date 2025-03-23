@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Entity
 //@Table(name = "technician") *se deixar a marcação para criar uma tabela própria dá erro
+@Table(name = "technician")
 public class Technician extends Person{
 
     @JsonIgnore
