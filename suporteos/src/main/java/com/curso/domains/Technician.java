@@ -1,5 +1,6 @@
 package com.curso.domains;
 
+import com.curso.domains.dtos.TechnicianDTO;
 import com.curso.domains.enums.PersonType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 //@Table(name = "technician") *se deixar a marcação para criar uma tabela própria dá erro
@@ -19,6 +21,19 @@ public class Technician extends Person{
 
     public Technician(Long id, String firstName, String lastName, String cpf, String email, String password) {
         super(id, firstName, lastName, cpf, email, password);
+        addPersonType(PersonType.TECHNICIAN);
+    }
+
+    public Technician(TechnicianDTO obj){
+        this.id = obj.getId();
+        this.firstName = obj.getFirstName();
+        this.lastName = obj.getLastName();
+        this.cpf = obj.getCpf();
+        this.email = obj.getEmail();
+        this.password = obj.getPassword();
+        this.createdAt = obj.getCreatedAt();
+        this.personType = obj.getPersonType().stream().map(x -> x.getId()).collect(Collectors.toSet());
+        addPersonType(PersonType.USER);
         addPersonType(PersonType.TECHNICIAN);
     }
 
