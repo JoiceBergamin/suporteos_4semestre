@@ -42,6 +42,9 @@ public class TechnicianDTO {
 
     protected Set<Integer> personType = new HashSet<>();
 
+    public TechnicianDTO() {
+    }
+
     public TechnicianDTO(Technician obj) {
         this.id = obj.getId();
         this.firstName = obj.getFirstName();

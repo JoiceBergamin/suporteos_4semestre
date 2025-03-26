@@ -43,6 +43,9 @@ public class UserDTO {
 
     protected Set<Integer> personType = new HashSet<>();
 
+    public UserDTO() {
+    }
+
     public UserDTO(User obj) {
         this.id = obj.getId();
         this.firstName = obj.getFirstName();
