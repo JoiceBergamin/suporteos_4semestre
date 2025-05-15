@@ -3,6 +3,8 @@ package com.curso.resources;
 import com.curso.domains.ServiceOrder;
 import com.curso.domains.dtos.ServiceOrderDTO;
 import com.curso.services.ServiceOrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,23 +17,30 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/serviceorder")
+@Tag(name = "Ordem de Serviço", description = "API para Ordem de Serviços")
 public class ServiceOrderResource {
 
     @Autowired
     private ServiceOrderService osService;
 
     @GetMapping(value = "/{id}")
+    @Operation(summary = "Buscar ordem de Serviço por ID",
+            description = "Retorna uma ordem de serviço pelo ID")
     public ResponseEntity<ServiceOrderDTO> findById(@PathVariable UUID id){
         ServiceOrder obj = this.osService.findbyId(id);
         return ResponseEntity.ok().body(new ServiceOrderDTO(obj));
     }
 
     @GetMapping
+    @Operation(summary = "Listar todas as ordens de serviços",
+            description = "Retorna uma lista com todas as ordens de serviços cadastrados")
     public ResponseEntity<List<ServiceOrderDTO>> findAll(){
         return ResponseEntity.ok().body(osService.findAll());
     }
 
     @PostMapping
+    @Operation(summary = "Criar uma nova ordem de serviço",
+            description = "Cria uma nova ordem de serviço com base nos dados fornecidos")
     public ResponseEntity<ServiceOrderDTO> create(@Valid @RequestBody ServiceOrderDTO objDto){
         ServiceOrder newObj = osService.create(objDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
@@ -39,6 +48,8 @@ public class ServiceOrderResource {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Altera uma ordem de serviço",
+            description = "Altera uma ordem de serviço existente")
     public ResponseEntity<ServiceOrderDTO> update(@PathVariable UUID id, @Valid @RequestBody ServiceOrderDTO objDto){
         ServiceOrder Obj = osService.update(id, objDto);
         return ResponseEntity.ok().body(new ServiceOrderDTO(Obj));
